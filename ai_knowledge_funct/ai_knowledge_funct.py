@@ -24,7 +24,9 @@ class AIKnowledgeFunct(OpenAIFunctBase):
             self.logger.error(log)
             raise e
 
-    def get_knowledge_rag(self, **arguments: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def get_results_from_knowledge_rag(
+        self, **arguments: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
         try:
             self.logger.info(f"Arguments: {arguments}")
 
