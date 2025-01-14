@@ -32,7 +32,6 @@ class AIKnowledgeFunct(OpenAIFunctBase):
 
             variables = {
                 "userQuery": arguments["user_query"],
-                "indexName": self.setting["index_name"],
                 "documentSource": self.setting["document_source"],
             }
             results = self.execute_graphql_query(
