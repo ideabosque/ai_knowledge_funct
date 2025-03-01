@@ -31,6 +31,7 @@ class AIKnowledgeFunct(OpenAIFunctBase):
             self.logger.info(f"Arguments: {arguments}")
 
             variables = {
+                "limit": 5,
                 "userQuery": arguments["user_query"],
                 "documentSource": self.setting["document_source"],
             }
@@ -44,6 +45,7 @@ class AIKnowledgeFunct(OpenAIFunctBase):
                 return knowledge_rag["results"]
 
             variables = {
+                "limit": 5,
                 "userQuery": arguments["user_query"],
                 "isSimilaritySearch": True,
                 "documentSource": self.setting["document_source"],
