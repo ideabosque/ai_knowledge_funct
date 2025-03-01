@@ -44,12 +44,11 @@ class AIKnowledgeFunct(OpenAIFunctBase):
             if knowledge_rag["total"] > 0:
                 return knowledge_rag["results"]
 
-            variables = {
-                "limit": 5,
-                "userQuery": arguments["user_query"],
-                "isSimilaritySearch": True,
-                "documentSource": self.setting["document_source"],
-            }
+            variables.update(
+                {
+                    "isSimilaritySearch": True,
+                }
+            )
             knowledge_rag = self.execute_graphql_query(
                 "ai_knowledge_graphql", "knowledgeRag", "Query", variables
             )["knowledgeRag"]
@@ -58,4 +57,13 @@ class AIKnowledgeFunct(OpenAIFunctBase):
         except Exception as e:
             log = traceback.format_exc()
             self.logger.error(log)
-            return {"error": e.args}
+            # return {"error": e.args}
+            variables.update(
+                {
+                    "isSimilaritySearch": True,
+                }
+            )
+            knowledge_rag = self.execute_graphql_query(
+                "ai_knowledge_graphql", "knowledgeRag", "Query", variables
+            )["knowledgeRag"]
+            return knowledge_rag["results"]
