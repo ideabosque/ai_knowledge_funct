@@ -34,11 +34,25 @@ class AIKnowledgeFunct(OpenAIFunctBase):
                 "userQuery": arguments["user_query"],
                 "documentSource": self.setting["document_source"],
             }
-            results = self.execute_graphql_query(
+            knowledge_rag = self.execute_graphql_query(
                 "ai_knowledge_graphql", "knowledgeRag", "Query", variables
-            )["knowledgeRag"]["results"]
+            )["knowledgeRag"]
 
-            return humps.decamelize(results)
+            knowledge_rag = humps.decamelize(knowledge_rag)
+
+            if knowledge_rag["total"] > 0:
+                return knowledge_rag["results"]
+
+            variables = {
+                "userQuery": arguments["user_query"],
+                "isSimilaritySearch": True,
+                "documentSource": self.setting["document_source"],
+            }
+            knowledge_rag = self.execute_graphql_query(
+                "ai_knowledge_graphql", "knowledgeRag", "Query", variables
+            )["knowledgeRag"]
+            return knowledge_rag["results"]
+
         except Exception as e:
             log = traceback.format_exc()
             self.logger.error(log)
