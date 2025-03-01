@@ -42,4 +42,4 @@ class AIKnowledgeFunct(OpenAIFunctBase):
         except Exception as e:
             log = traceback.format_exc()
             self.logger.error(log)
-            raise e
+            return {"error": e.args}
