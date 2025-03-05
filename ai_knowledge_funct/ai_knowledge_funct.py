@@ -29,6 +29,7 @@ class AIKnowledgeFunct(OpenAIFunctBase):
     ) -> List[Dict[str, Any]]:
         try:
             self.logger.info(f"Arguments: {arguments}")
+            endpoint_id = arguments["endpoint_id"]
 
             variables = {
                 "limit": 5,
@@ -36,7 +37,7 @@ class AIKnowledgeFunct(OpenAIFunctBase):
                 "documentSource": self.setting["document_source"],
             }
             knowledge_rag = self.execute_graphql_query(
-                "ai_knowledge_graphql", "knowledgeRag", "Query", variables
+                endpoint_id, "ai_knowledge_graphql", "knowledgeRag", "Query", variables
             )["knowledgeRag"]
 
             knowledge_rag = humps.decamelize(knowledge_rag)
@@ -50,7 +51,7 @@ class AIKnowledgeFunct(OpenAIFunctBase):
                 }
             )
             knowledge_rag = self.execute_graphql_query(
-                "ai_knowledge_graphql", "knowledgeRag", "Query", variables
+                endpoint_id, "ai_knowledge_graphql", "knowledgeRag", "Query", variables
             )["knowledgeRag"]
             return knowledge_rag["results"]
 
@@ -64,6 +65,6 @@ class AIKnowledgeFunct(OpenAIFunctBase):
                 }
             )
             knowledge_rag = self.execute_graphql_query(
-                "ai_knowledge_graphql", "knowledgeRag", "Query", variables
+                endpoint_id, "ai_knowledge_graphql", "knowledgeRag", "Query", variables
             )["knowledgeRag"]
             return knowledge_rag["results"]
