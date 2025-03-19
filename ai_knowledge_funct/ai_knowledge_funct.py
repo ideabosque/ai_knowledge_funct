@@ -10,15 +10,15 @@ import logging
 import traceback
 from typing import Any, Dict, List
 
-from openai_funct_base import OpenAIFunctBase
+from ai_agent_funct_base import AIAgentFunctBase
 
 
-class AIKnowledgeFunct(OpenAIFunctBase):
+class AIKnowledgeFunct(AIAgentFunctBase):
 
     def __init__(self, logger: logging.Logger, **setting: Dict[str, Any]):
         try:
             self.logger = logger
-            OpenAIFunctBase.__init__(self, logger, **setting)
+            AIAgentFunctBase.__init__(self, logger, **setting)
         except Exception as e:
             log = traceback.format_exc()
             self.logger.error(log)
